@@ -1,0 +1,7 @@
+title: Manuais da Central de Chamados
+description: Manuais de uso, sempre atualizados
+theme: jekyll-theme-primer
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
