@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1222 713" width="1222" height="713" font-family="Arial, Helvetica, sans-serif" role="img" aria-label="Sobreaviso (5.0): fora do expediente, só o crítico aciona o plantonista">
+<defs><marker id="seta" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#222"/></marker></defs>
+<rect width="1222" height="713" fill="#ffffff"/>
+<g transform="translate(12,12)">
+<text text-anchor="start" font-size="15" font-weight="bold"><tspan x="0" y="15">Sobreaviso (5.0): fora do expediente, só o crítico aciona o plantonista</tspan></text>
+<g transform="translate(0,30)" stroke-linejoin="round">
+<rect x="0" y="0" width="1198" height="625" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<text transform="translate(21,312) rotate(-90)" text-anchor="middle" font-size="13" font-weight="bold">Central de Chamados</text>
+<rect x="34" y="0" width="1164" height="125" fill="#ffffff" stroke="#222" stroke-width="1"/>
+<line x1="68" y1="0" x2="68" y2="125" stroke="#222"/>
+<text transform="translate(51,62) rotate(-90)" text-anchor="middle" font-size="12" font-weight="bold"><tspan x="0" y="4">Usuário</tspan></text>
+<rect x="34" y="125" width="1164" height="250" fill="#f7f8fa" stroke="#222" stroke-width="1"/>
+<line x1="68" y1="125" x2="68" y2="375" stroke="#222"/>
+<text transform="translate(51,250) rotate(-90)" text-anchor="middle" font-size="12" font-weight="bold"><tspan x="0" y="4">Central</tspan></text>
+<rect x="34" y="375" width="1164" height="250" fill="#ffffff" stroke="#222" stroke-width="1"/>
+<line x1="68" y1="375" x2="68" y2="625" stroke="#222"/>
+<text transform="translate(51,500) rotate(-90)" text-anchor="middle" font-size="12" font-weight="bold"><tspan x="0" y="4">Plantonista da escala</tspan></text>
+<polyline points="188,62 308,62 308,188 330,188" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="380,188 470,188" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="356,212 356,312 470,312" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="612,312 708,312" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="612,188 678,188 678,438 700,438" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="750,438 840,438" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="726,462 726,562 840,562" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="910,522 910,510 540,510 540,354" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="982,438 1078,438" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<rect x="384" y="164" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="386" y="177">Sim</tspan></text>
+<rect x="358" y="228" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="362" y="240">Não</tspan></text>
+<rect x="754" y="414" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="756" y="427">Sim</tspan></text>
+<rect x="728" y="478" width="52" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="732" y="490">Rebaixa</tspan></text>
+<circle cx="170" cy="62" r="17.2" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="170" y="94">Chamado fora do</tspan><tspan x="170" y="107">expediente</tspan></text>
+<path d="M356 162 L380 188 L356 212 L330 188Z" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<path d="M346 178L364 196M364 178L346 196" stroke="#222" stroke-width="3"/>
+<text text-anchor="end" font-size="11" font-weight="normal"><tspan x="348" y="154">É crítico?</tspan></text>
+<rect x="470" y="272" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(476,278)" fill="#444"><rect x="6" y="-1" width="3" height="4" transform="rotate(0 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(45 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(90 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(135 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(180 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(225 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(270 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(315 7.5 7.5)"/><circle cx="7.5" cy="7.5" r="5.2"/><circle cx="7.5" cy="7.5" r="2.2" fill="#fff"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="540" y="315">Espera o expediente</tspan><tspan x="540" y="328">(o SLA não conta)</tspan></text>
+<circle cx="726" cy="312" r="16.0" fill="#fff" stroke="#222" stroke-width="4"/>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="726" y="344">Atendido no</tspan><tspan x="726" y="357">expediente</tspan></text>
+<rect x="470" y="146" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(476,152)" fill="#444"><rect x="6" y="-1" width="3" height="4" transform="rotate(0 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(45 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(90 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(135 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(180 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(225 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(270 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(315 7.5 7.5)"/><circle cx="7.5" cy="7.5" r="5.2"/><circle cx="7.5" cy="7.5" r="2.2" fill="#fff"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="540" y="177">Aciona o</tspan><tspan x="540" y="190">plantonista (push,</tspan><tspan x="540" y="203">repetido até</tspan><tspan x="540" y="216">confirmar)</tspan></text>
+<path d="M726 412 L750 438 L726 462 L700 438Z" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<path d="M716 428L734 446M734 428L716 446" stroke="#222" stroke-width="3"/>
+<text text-anchor="end" font-size="11" font-weight="normal"><tspan x="718" y="404">Confirma?</tspan></text>
+<rect x="840" y="396" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(846,402)" fill="none" stroke="#444" stroke-width="1.2"><circle cx="7" cy="5" r="3.2"/><path d="M1 16c0-4 2.7-6 6-6s6 2 6 6z"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="910" y="440">Atende (o SLA do</tspan><tspan x="910" y="453">crítico conta)</tspan></text>
+<rect x="840" y="522" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(846,526)" fill="none" stroke="#444" stroke-width="1.2"><circle cx="7" cy="5" r="3.2"/><path d="M1 16c0-4 2.7-6 6-6s6 2 6 6z"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="910" y="565">Rebaixa: não era</tspan><tspan x="910" y="578">crítico</tspan></text>
+<circle cx="1096" cy="438" r="16.0" fill="#fff" stroke="#222" stroke-width="4"/>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="1096" y="475">Solucionado</tspan></text>
+</g>
+<g transform="translate(0,681)" font-size="11" fill="#444"><g transform="translate(0,-12)" fill="none" stroke="#444" stroke-width="1.2"><circle cx="7" cy="5" r="3.2"/><path d="M1 16c0-4 2.7-6 6-6s6 2 6 6z"/></g><text x="20" y="0">tarefa de uma pessoa</text><g transform="translate(170,-12)" fill="#444"><rect x="6" y="-1" width="3" height="4" transform="rotate(0 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(45 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(90 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(135 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(180 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(225 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(270 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(315 7.5 7.5)"/><circle cx="7.5" cy="7.5" r="5.2"/><circle cx="7.5" cy="7.5" r="2.2" fill="#fff"/></g><text x="192" y="0">automática (Central)</text><text x="400" y="0">◇ decisão · ○ início · ● fim</text></g>
+</g></svg>

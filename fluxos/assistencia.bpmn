@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="defs_assistencia" targetNamespace="https://central-chamados/fluxos" exporter="Central de Chamados" exporterVersion="4.9.0">
+  <bpmn:collaboration id="colab_assistencia">
+    <bpmn:participant id="pool_assistencia" name="Assistência técnica e garantia, com reserva e retorno" processRef="proc_assistencia" />
+  </bpmn:collaboration>
+  <bpmn:process id="proc_assistencia" name="Assistência técnica e garantia, com reserva e retorno" isExecutable="false">
+    <bpmn:laneSet id="raias_assistencia">
+      <bpmn:lane id="raia_un" name="Unidade">
+        <bpmn:flowNodeRef>i</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fim</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_est" name="Estoque">
+        <bpmn:flowNodeRef>abre</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_custo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_res</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>reserva</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>retorno</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_res2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>volta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>descarte</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_gest" name="Gestor de estoque e compras">
+        <bpmn:flowNodeRef>aprova</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recusa</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_forn" name="Fornecedor de assistência">
+        <bpmn:flowNodeRef>conserta</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_glpi" name="Chamado (atendimento)">
+        <bpmn:flowNodeRef>pend</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>soluciona</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="i" name="Equipamento com defeito">
+      <bpmn:outgoing>seta_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="abre" name="Envia para assistência (defeito, protocolo, previsão)">
+      <bpmn:incoming>seta_1</bpmn:incoming>
+      <bpmn:outgoing>seta_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g_custo" name="Com custo?">
+      <bpmn:incoming>seta_2</bpmn:incoming>
+      <bpmn:outgoing>seta_3</bpmn:outgoing>
+      <bpmn:outgoing>seta_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="aprova" name="Aprova o envio">
+      <bpmn:incoming>seta_3</bpmn:incoming>
+      <bpmn:outgoing>seta_5</bpmn:outgoing>
+      <bpmn:outgoing>seta_6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="recusa" name="Envio recusado">
+      <bpmn:incoming>seta_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="g_res" name="A unidade fica sem?">
+      <bpmn:incoming>seta_4</bpmn:incoming>
+      <bpmn:incoming>seta_5</bpmn:incoming>
+      <bpmn:outgoing>seta_7</bpmn:outgoing>
+      <bpmn:outgoing>seta_8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="reserva" name="Entrega um equipamento da reserva">
+      <bpmn:incoming>seta_7</bpmn:incoming>
+      <bpmn:outgoing>seta_9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="pend" name="Chamado pendente, acompanhamento privado">
+      <bpmn:incoming>seta_8</bpmn:incoming>
+      <bpmn:incoming>seta_9</bpmn:incoming>
+      <bpmn:outgoing>seta_10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="conserta" name="Conserta, troca ou dá o laudo">
+      <bpmn:incoming>seta_10</bpmn:incoming>
+      <bpmn:outgoing>seta_11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="retorno" name="Registra o retorno">
+      <bpmn:incoming>seta_11</bpmn:incoming>
+      <bpmn:outgoing>seta_12</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g_res2" name="Resultado">
+      <bpmn:incoming>seta_12</bpmn:incoming>
+      <bpmn:outgoing>seta_13</bpmn:outgoing>
+      <bpmn:outgoing>seta_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="volta" name="Volta à unidade (troca: patrimônio novo); a reserva volta">
+      <bpmn:incoming>seta_13</bpmn:incoming>
+      <bpmn:outgoing>seta_15</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="descarte" name="Sem conserto: segue para a proposta de descarte">
+      <bpmn:incoming>seta_14</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="soluciona" name="Central soluciona o chamado (a unidade foi atendida)">
+      <bpmn:incoming>seta_15</bpmn:incoming>
+      <bpmn:outgoing>seta_16</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="fim" name="Unidade atendida">
+      <bpmn:incoming>seta_16</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="seta_1" sourceRef="i" targetRef="abre" />
+    <bpmn:sequenceFlow id="seta_2" sourceRef="abre" targetRef="g_custo" />
+    <bpmn:sequenceFlow id="seta_3" name="Sim, sem ser o Gestor" sourceRef="g_custo" targetRef="aprova" />
+    <bpmn:sequenceFlow id="seta_4" name="Não" sourceRef="g_custo" targetRef="g_res" />
+    <bpmn:sequenceFlow id="seta_5" name="Aprova" sourceRef="aprova" targetRef="g_res" />
+    <bpmn:sequenceFlow id="seta_6" name="Recusa" sourceRef="aprova" targetRef="recusa" />
+    <bpmn:sequenceFlow id="seta_7" name="Sim" sourceRef="g_res" targetRef="reserva" />
+    <bpmn:sequenceFlow id="seta_8" name="Não" sourceRef="g_res" targetRef="pend" />
+    <bpmn:sequenceFlow id="seta_9" sourceRef="reserva" targetRef="pend" />
+    <bpmn:sequenceFlow id="seta_10" sourceRef="pend" targetRef="conserta" />
+    <bpmn:sequenceFlow id="seta_11" sourceRef="conserta" targetRef="retorno" />
+    <bpmn:sequenceFlow id="seta_12" sourceRef="retorno" targetRef="g_res2" />
+    <bpmn:sequenceFlow id="seta_13" name="Consertado ou trocado" sourceRef="g_res2" targetRef="volta" />
+    <bpmn:sequenceFlow id="seta_14" name="Sem conserto" sourceRef="g_res2" targetRef="descarte" />
+    <bpmn:sequenceFlow id="seta_15" sourceRef="volta" targetRef="soluciona" />
+    <bpmn:sequenceFlow id="seta_16" sourceRef="soluciona" targetRef="fim" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="diagrama_assistencia">
+    <bpmndi:BPMNPlane id="plano_assistencia" bpmnElement="colab_assistencia">
+      <bpmndi:BPMNShape id="pool_assistencia_di" bpmnElement="pool_assistencia" isHorizontal="true">
+        <dc:Bounds x="0" y="0" width="2308" height="750" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_un_di" bpmnElement="raia_un" isHorizontal="true">
+        <dc:Bounds x="34" y="0" width="2274" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_est_di" bpmnElement="raia_est" isHorizontal="true">
+        <dc:Bounds x="34" y="125" width="2274" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_gest_di" bpmnElement="raia_gest" isHorizontal="true">
+        <dc:Bounds x="34" y="375" width="2274" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_forn_di" bpmnElement="raia_forn" isHorizontal="true">
+        <dc:Bounds x="34" y="500" width="2274" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_glpi_di" bpmnElement="raia_glpi" isHorizontal="true">
+        <dc:Bounds x="34" y="625" width="2274" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="i_di" bpmnElement="i">
+        <dc:Bounds x="152" y="44" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="110" y="84" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="abre_di" bpmnElement="abre">
+        <dc:Bounds x="284" y="146" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_custo_di" bpmnElement="g_custo" isMarkerVisible="true">
+        <dc:Bounds x="516" y="162" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="412" y="130" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="aprova_di" bpmnElement="aprova">
+        <dc:Bounds x="654" y="396" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recusa_di" bpmnElement="recusa">
+        <dc:Bounds x="892" y="420" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="460" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_res_di" bpmnElement="g_res" isMarkerVisible="true">
+        <dc:Bounds x="886" y="288" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="782" y="256" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="reserva_di" bpmnElement="reserva">
+        <dc:Bounds x="1024" y="146" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="pend_di" bpmnElement="pend">
+        <dc:Bounds x="1024" y="646" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="conserta_di" bpmnElement="conserta">
+        <dc:Bounds x="1210" y="522" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="retorno_di" bpmnElement="retorno">
+        <dc:Bounds x="1394" y="272" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_res2_di" bpmnElement="g_res2" isMarkerVisible="true">
+        <dc:Bounds x="1626" y="288" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1522" y="256" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="volta_di" bpmnElement="volta">
+        <dc:Bounds x="1764" y="146" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="descarte_di" bpmnElement="descarte">
+        <dc:Bounds x="1818" y="294" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1776" y="334" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="soluciona_di" bpmnElement="soluciona">
+        <dc:Bounds x="1950" y="646" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="fim_di" bpmnElement="fim">
+        <dc:Bounds x="2188" y="44" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2146" y="84" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="seta_1_di" bpmnElement="seta_1">
+        <di:waypoint x="188" y="62" />
+        <di:waypoint x="262" y="62" />
+        <di:waypoint x="262" y="188" />
+        <di:waypoint x="284" y="188" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_2_di" bpmnElement="seta_2">
+        <di:waypoint x="426" y="188" />
+        <di:waypoint x="516" y="188" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_3_di" bpmnElement="seta_3">
+        <di:waypoint x="540" y="212" />
+        <di:waypoint x="540" y="438" />
+        <di:waypoint x="654" y="438" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="546" y="404" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_4_di" bpmnElement="seta_4">
+        <di:waypoint x="540" y="212" />
+        <di:waypoint x="540" y="312" />
+        <di:waypoint x="886" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="546" y="278" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_5_di" bpmnElement="seta_5">
+        <di:waypoint x="796" y="438" />
+        <di:waypoint x="864" y="438" />
+        <di:waypoint x="864" y="312" />
+        <di:waypoint x="886" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="870" y="278" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_6_di" bpmnElement="seta_6">
+        <di:waypoint x="796" y="438" />
+        <di:waypoint x="892" y="438" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="790" y="420" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_7_di" bpmnElement="seta_7">
+        <di:waypoint x="910" y="288" />
+        <di:waypoint x="910" y="188" />
+        <di:waypoint x="1024" y="188" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="916" y="256" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_8_di" bpmnElement="seta_8">
+        <di:waypoint x="910" y="338" />
+        <di:waypoint x="910" y="688" />
+        <di:waypoint x="1024" y="688" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="916" y="354" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_9_di" bpmnElement="seta_9">
+        <di:waypoint x="1096" y="228" />
+        <di:waypoint x="1096" y="646" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_10_di" bpmnElement="seta_10">
+        <di:waypoint x="1166" y="688" />
+        <di:waypoint x="1188" y="688" />
+        <di:waypoint x="1188" y="562" />
+        <di:waypoint x="1210" y="562" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_11_di" bpmnElement="seta_11">
+        <di:waypoint x="1352" y="562" />
+        <di:waypoint x="1372" y="562" />
+        <di:waypoint x="1372" y="312" />
+        <di:waypoint x="1394" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_12_di" bpmnElement="seta_12">
+        <di:waypoint x="1536" y="312" />
+        <di:waypoint x="1626" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_13_di" bpmnElement="seta_13">
+        <di:waypoint x="1650" y="288" />
+        <di:waypoint x="1650" y="188" />
+        <di:waypoint x="1764" y="188" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1656" y="256" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_14_di" bpmnElement="seta_14">
+        <di:waypoint x="1676" y="312" />
+        <di:waypoint x="1818" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1682" y="278" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_15_di" bpmnElement="seta_15">
+        <di:waypoint x="1906" y="188" />
+        <di:waypoint x="1928" y="188" />
+        <di:waypoint x="1928" y="688" />
+        <di:waypoint x="1950" y="688" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_16_di" bpmnElement="seta_16">
+        <di:waypoint x="2092" y="688" />
+        <di:waypoint x="2166" y="688" />
+        <di:waypoint x="2166" y="62" />
+        <di:waypoint x="2188" y="62" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
