@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1962 463" width="1962" height="463" font-family="Arial, Helvetica, sans-serif" role="img" aria-label="Consumíveis: entrada, saída e ajuste com aprovação">
+<defs><marker id="seta" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#222"/></marker></defs>
+<rect width="1962" height="463" fill="#ffffff"/>
+<g transform="translate(12,12)">
+<text text-anchor="start" font-size="15" font-weight="bold"><tspan x="0" y="15">Consumíveis: entrada, saída e ajuste com aprovação</tspan></text>
+<g transform="translate(0,30)" stroke-linejoin="round">
+<rect x="0" y="0" width="1938" height="375" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<text transform="translate(21,188) rotate(-90)" text-anchor="middle" font-size="13" font-weight="bold">Central de Chamados</text>
+<rect x="34" y="0" width="1904" height="250" fill="#ffffff" stroke="#222" stroke-width="1"/>
+<line x1="68" y1="0" x2="68" y2="250" stroke="#222"/>
+<text transform="translate(51,125) rotate(-90)" text-anchor="middle" font-size="12" font-weight="bold"><tspan x="0" y="4">Estoque</tspan></text>
+<rect x="34" y="250" width="1904" height="125" fill="#f7f8fa" stroke="#222" stroke-width="1"/>
+<line x1="68" y1="250" x2="68" y2="375" stroke="#222"/>
+<text transform="translate(51,312) rotate(-90)" text-anchor="middle" font-size="12" font-weight="bold"><tspan x="0" y="-3">Gestor de estoque</tspan><tspan x="0" y="11">e compras</tspan></text>
+<polyline points="188,62 330,62" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="380,62 470,62" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="356,88 356,188 470,188" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="612,62 700,62" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="750,62 1210,62" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="726,88 726,312 840,312" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="612,188 818,188 818,312 840,312" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="982,312 1070,312" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="1096,288 1096,62 1210,62" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="1120,312 1262,312" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="1352,62 1440,62" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="1466,88 1466,188 1580,188" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="1490,62 1818,62" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<polyline points="1722,188 1818,188" fill="none" stroke="#222" stroke-width="1.3" marker-end="url(#seta)"/>
+<rect x="384" y="26" width="70" height="30" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="386" y="39">Entrada ou</tspan><tspan x="386" y="52">saída</tspan></text>
+<rect x="358" y="103" width="45" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="362" y="115">Ajuste</tspan></text>
+<rect x="754" y="40" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="756" y="52">Não</tspan></text>
+<rect x="728" y="103" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="732" y="115">Sim</tspan></text>
+<rect x="676" y="179" width="77" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="middle" font-size="11" font-weight="normal"><tspan x="714" y="191">sempre pede</tspan></text>
+<rect x="1098" y="255" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="1102" y="267">Sim</tspan></text>
+<rect x="1124" y="290" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="1126" y="302">Não</tspan></text>
+<rect x="1468" y="103" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="1472" y="115">Sim</tspan></text>
+<rect x="1494" y="40" width="27" height="17" rx="3" fill="#fff" fill-opacity=".92"/>
+<text fill="#1d4ed8" text-anchor="start" font-size="11" font-weight="normal"><tspan x="1496" y="52">Não</tspan></text>
+<circle cx="170" cy="62" r="17.2" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="170" y="94">Movimento de</tspan><tspan x="170" y="107">consumível</tspan></text>
+<path d="M356 38 L380 62 L356 88 L330 62Z" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<path d="M346 54L364 72M364 54L346 72" stroke="#222" stroke-width="3"/>
+<text text-anchor="end" font-size="11" font-weight="normal"><tspan x="348" y="29">Tipo</tspan></text>
+<rect x="470" y="22" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(476,26)" fill="none" stroke="#444" stroke-width="1.2"><circle cx="7" cy="5" r="3.2"/><path d="M1 16c0-4 2.7-6 6-6s6 2 6 6z"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="540" y="58">Informa item,</tspan><tspan x="540" y="71">almoxarifado e</tspan><tspan x="540" y="84">quantidade</tspan></text>
+<path d="M726 38 L750 62 L726 88 L700 62Z" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<path d="M716 54L734 72M734 54L716 72" stroke="#222" stroke-width="3"/>
+<text text-anchor="end" font-size="11" font-weight="normal"><tspan x="718" y="29">Pede aprovação?</tspan></text>
+<rect x="470" y="146" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(476,152)" fill="none" stroke="#444" stroke-width="1.2"><circle cx="7" cy="5" r="3.2"/><path d="M1 16c0-4 2.7-6 6-6s6 2 6 6z"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="540" y="190">Informa a contagem</tspan><tspan x="540" y="203">e o motivo</tspan></text>
+<rect x="840" y="272" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(846,276)" fill="none" stroke="#444" stroke-width="1.2"><circle cx="7" cy="5" r="3.2"/><path d="M1 16c0-4 2.7-6 6-6s6 2 6 6z"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="910" y="321">Analisa o pedido</tspan></text>
+<path d="M1096 288 L1120 312 L1096 338 L1070 312Z" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<path d="M1086 304L1104 322M1104 304L1086 322" stroke="#222" stroke-width="3"/>
+<text text-anchor="end" font-size="11" font-weight="normal"><tspan x="1088" y="279">Aprova?</tspan></text>
+<circle cx="1280" cy="312" r="16.0" fill="#fff" stroke="#222" stroke-width="4"/>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="1280" y="344">Recusado (fica</tspan><tspan x="1280" y="357">registrado)</tspan></text>
+<rect x="1210" y="22" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(1216,28)" fill="#444"><rect x="6" y="-1" width="3" height="4" transform="rotate(0 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(45 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(90 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(135 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(180 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(225 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(270 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(315 7.5 7.5)"/><circle cx="7.5" cy="7.5" r="5.2"/><circle cx="7.5" cy="7.5" r="2.2" fill="#fff"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="1280" y="52">Saldo atualizado</tspan><tspan x="1280" y="65">pela movimentação</tspan><tspan x="1280" y="78">(nunca editado à</tspan><tspan x="1280" y="91">mão)</tspan></text>
+<path d="M1466 38 L1490 62 L1466 88 L1440 62Z" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<path d="M1456 54L1474 72M1474 54L1456 72" stroke="#222" stroke-width="3"/>
+<text text-anchor="end" font-size="11" font-weight="normal"><tspan x="1458" y="29">Abaixo do mínimo?</tspan></text>
+<rect x="1580" y="146" width="142" height="82" rx="10" fill="#fff" stroke="#222" stroke-width="1.5"/>
+<g transform="translate(1586,152)" fill="none" stroke="#444" stroke-width="1.2"><circle cx="7" cy="5" r="3.2"/><path d="M1 16c0-4 2.7-6 6-6s6 2 6 6z"/></g>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="1650" y="183">Pedir compra</tspan><tspan x="1650" y="196">(quantidade que</tspan><tspan x="1650" y="209">falta)</tspan></text>
+<circle cx="1836" cy="188" r="16.0" fill="#fff" stroke="#222" stroke-width="4"/>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="1836" y="219">Pedido de compra</tspan><tspan x="1836" y="232">aberto</tspan></text>
+<circle cx="1836" cy="62" r="16.0" fill="#fff" stroke="#222" stroke-width="4"/>
+<text text-anchor="middle" font-size="11" font-weight="normal"><tspan x="1836" y="100">Saldo em dia</tspan></text>
+</g>
+<g transform="translate(0,431)" font-size="11" fill="#444"><g transform="translate(0,-12)" fill="none" stroke="#444" stroke-width="1.2"><circle cx="7" cy="5" r="3.2"/><path d="M1 16c0-4 2.7-6 6-6s6 2 6 6z"/></g><text x="20" y="0">tarefa de uma pessoa</text><g transform="translate(170,-12)" fill="#444"><rect x="6" y="-1" width="3" height="4" transform="rotate(0 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(45 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(90 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(135 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(180 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(225 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(270 7.5 7.5)"/><rect x="6" y="-1" width="3" height="4" transform="rotate(315 7.5 7.5)"/><circle cx="7.5" cy="7.5" r="5.2"/><circle cx="7.5" cy="7.5" r="2.2" fill="#fff"/></g><text x="192" y="0">automática (Central)</text><text x="400" y="0">◇ decisão · ○ início · ● fim</text></g>
+</g></svg>
