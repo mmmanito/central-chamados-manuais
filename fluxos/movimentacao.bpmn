@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="defs_movimentacao" targetNamespace="https://central-chamados/fluxos" exporter="Central de Chamados" exporterVersion="4.9.0">
+  <bpmn:collaboration id="colab_movimentacao">
+    <bpmn:participant id="pool_movimentacao" name="Movimentação de equipamento com aprovação opcional" processRef="proc_movimentacao" />
+  </bpmn:collaboration>
+  <bpmn:process id="proc_movimentacao" name="Movimentação de equipamento com aprovação opcional" isExecutable="false">
+    <bpmn:laneSet id="raias_movimentacao">
+      <bpmn:lane id="raia_resp" name="Estoque">
+        <bpmn:flowNodeRef>i</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>escolhe</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_pede</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>aplica</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_entrega</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>termo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fim</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_gest" name="Gestor de estoque e compras">
+        <bpmn:flowNodeRef>analisa</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_aprova</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>recusado</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="i" name="Equipamento precisa mudar de lugar ou situação">
+      <bpmn:outgoing>seta_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="escolhe" name="Escolhe: entrega, transferência, recolhimento, manutenção ou retorno">
+      <bpmn:incoming>seta_1</bpmn:incoming>
+      <bpmn:outgoing>seta_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g_pede" name="Pede aprovação? (configuração ou escolha)">
+      <bpmn:incoming>seta_2</bpmn:incoming>
+      <bpmn:outgoing>seta_3</bpmn:outgoing>
+      <bpmn:outgoing>seta_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="analisa" name="Analisa o pedido">
+      <bpmn:incoming>seta_4</bpmn:incoming>
+      <bpmn:outgoing>seta_5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g_aprova" name="Aprova?">
+      <bpmn:incoming>seta_5</bpmn:incoming>
+      <bpmn:outgoing>seta_6</bpmn:outgoing>
+      <bpmn:outgoing>seta_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="recusado" name="Recusado (fica registrado)">
+      <bpmn:incoming>seta_7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="aplica" name="Registra no histórico e muda o lugar e a situação">
+      <bpmn:incoming>seta_3</bpmn:incoming>
+      <bpmn:incoming>seta_6</bpmn:incoming>
+      <bpmn:outgoing>seta_8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="g_entrega" name="É entrega?">
+      <bpmn:incoming>seta_8</bpmn:incoming>
+      <bpmn:outgoing>seta_9</bpmn:outgoing>
+      <bpmn:outgoing>seta_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="termo" name="Imprime o termo em PDF e colhe a assinatura">
+      <bpmn:incoming>seta_9</bpmn:incoming>
+      <bpmn:outgoing>seta_11</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="fim" name="Movimentação concluída">
+      <bpmn:incoming>seta_10</bpmn:incoming>
+      <bpmn:incoming>seta_11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="seta_1" sourceRef="i" targetRef="escolhe" />
+    <bpmn:sequenceFlow id="seta_2" sourceRef="escolhe" targetRef="g_pede" />
+    <bpmn:sequenceFlow id="seta_3" name="Não (ou feita pelo Gestor)" sourceRef="g_pede" targetRef="aplica" />
+    <bpmn:sequenceFlow id="seta_4" name="Sim" sourceRef="g_pede" targetRef="analisa" />
+    <bpmn:sequenceFlow id="seta_5" sourceRef="analisa" targetRef="g_aprova" />
+    <bpmn:sequenceFlow id="seta_6" name="Sim" sourceRef="g_aprova" targetRef="aplica" />
+    <bpmn:sequenceFlow id="seta_7" name="Não" sourceRef="g_aprova" targetRef="recusado" />
+    <bpmn:sequenceFlow id="seta_8" sourceRef="aplica" targetRef="g_entrega" />
+    <bpmn:sequenceFlow id="seta_9" name="Sim" sourceRef="g_entrega" targetRef="termo" />
+    <bpmn:sequenceFlow id="seta_10" name="Não" sourceRef="g_entrega" targetRef="fim" />
+    <bpmn:sequenceFlow id="seta_11" sourceRef="termo" targetRef="fim" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="diagrama_movimentacao">
+    <bpmndi:BPMNPlane id="plano_movimentacao" bpmnElement="colab_movimentacao">
+      <bpmndi:BPMNShape id="pool_movimentacao_di" bpmnElement="pool_movimentacao" isHorizontal="true">
+        <dc:Bounds x="0" y="0" width="1753" height="375" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_resp_di" bpmnElement="raia_resp" isHorizontal="true">
+        <dc:Bounds x="34" y="0" width="1719" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_gest_di" bpmnElement="raia_gest" isHorizontal="true">
+        <dc:Bounds x="34" y="250" width="1719" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="i_di" bpmnElement="i">
+        <dc:Bounds x="152" y="44" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="110" y="84" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="escolhe_di" bpmnElement="escolhe">
+        <dc:Bounds x="284" y="22" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_pede_di" bpmnElement="g_pede" isMarkerVisible="true">
+        <dc:Bounds x="516" y="38" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="412" y="6" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="analisa_di" bpmnElement="analisa">
+        <dc:Bounds x="654" y="272" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_aprova_di" bpmnElement="g_aprova" isMarkerVisible="true">
+        <dc:Bounds x="886" y="288" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="782" y="256" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="recusado_di" bpmnElement="recusado">
+        <dc:Bounds x="1078" y="294" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1036" y="334" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="aplica_di" bpmnElement="aplica">
+        <dc:Bounds x="1024" y="22" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_entrega_di" bpmnElement="g_entrega" isMarkerVisible="true">
+        <dc:Bounds x="1256" y="38" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1152" y="6" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="termo_di" bpmnElement="termo">
+        <dc:Bounds x="1394" y="146" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="fim_di" bpmnElement="fim">
+        <dc:Bounds x="1632" y="44" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1590" y="84" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="seta_1_di" bpmnElement="seta_1">
+        <di:waypoint x="188" y="62" />
+        <di:waypoint x="284" y="62" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_2_di" bpmnElement="seta_2">
+        <di:waypoint x="426" y="62" />
+        <di:waypoint x="516" y="62" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_3_di" bpmnElement="seta_3">
+        <di:waypoint x="566" y="62" />
+        <di:waypoint x="1024" y="62" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="572" y="28" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_4_di" bpmnElement="seta_4">
+        <di:waypoint x="540" y="88" />
+        <di:waypoint x="540" y="312" />
+        <di:waypoint x="654" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="546" y="104" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_5_di" bpmnElement="seta_5">
+        <di:waypoint x="796" y="312" />
+        <di:waypoint x="886" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_6_di" bpmnElement="seta_6">
+        <di:waypoint x="910" y="288" />
+        <di:waypoint x="910" y="62" />
+        <di:waypoint x="1024" y="62" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="916" y="256" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_7_di" bpmnElement="seta_7">
+        <di:waypoint x="936" y="312" />
+        <di:waypoint x="1078" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="942" y="278" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_8_di" bpmnElement="seta_8">
+        <di:waypoint x="1166" y="62" />
+        <di:waypoint x="1256" y="62" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_9_di" bpmnElement="seta_9">
+        <di:waypoint x="1280" y="88" />
+        <di:waypoint x="1280" y="188" />
+        <di:waypoint x="1394" y="188" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1286" y="104" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_10_di" bpmnElement="seta_10">
+        <di:waypoint x="1306" y="62" />
+        <di:waypoint x="1632" y="62" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1312" y="28" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_11_di" bpmnElement="seta_11">
+        <di:waypoint x="1536" y="188" />
+        <di:waypoint x="1610" y="188" />
+        <di:waypoint x="1610" y="62" />
+        <di:waypoint x="1632" y="62" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

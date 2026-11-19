@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="defs_chamado" targetNamespace="https://central-chamados/fluxos" exporter="Central de Chamados" exporterVersion="4.9.0">
+  <bpmn:collaboration id="colab_chamado">
+    <bpmn:participant id="pool_chamado" name="Ciclo de vida do chamado (5.0): da abertura no aplicativo ao fechamento" processRef="proc_chamado" />
+  </bpmn:collaboration>
+  <bpmn:process id="proc_chamado" name="Ciclo de vida do chamado (5.0): da abertura no aplicativo ao fechamento" isExecutable="false">
+    <bpmn:laneSet id="raias_chamado">
+      <bpmn:lane id="raia_un" name="Usuário ou gerente">
+        <bpmn:flowNodeRef>i</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>abre</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>cancela</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>f_canc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_aprova</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>avalia</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_central" name="Central">
+        <bpmn:flowNodeRef>g_tri</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fila</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>avisa</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>auto</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fecha</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_tri" name="Triagem">
+        <bpmn:flowNodeRef>triagem</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_tec" name="Técnico">
+        <bpmn:flowNodeRef>assume</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>atende</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_pend</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g_sub</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>pend</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>sub</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>solucao</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="i" name="Problema ou pedido">
+      <bpmn:outgoing>seta_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="abre" name="Abre o chamado no aplicativo (texto, fotos)">
+      <bpmn:incoming>seta_1</bpmn:incoming>
+      <bpmn:outgoing>seta_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g_tri" name="Triagem ligada?">
+      <bpmn:incoming>seta_2</bpmn:incoming>
+      <bpmn:outgoing>seta_3</bpmn:outgoing>
+      <bpmn:outgoing>seta_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="triagem" name="Direciona ao grupo ou ao técnico">
+      <bpmn:incoming>seta_3</bpmn:incoming>
+      <bpmn:outgoing>seta_5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="fila" name="Na fila do grupo (faixa Na fila, sem técnico)">
+      <bpmn:incoming>seta_4</bpmn:incoming>
+      <bpmn:incoming>seta_5</bpmn:incoming>
+      <bpmn:outgoing>seta_6</bpmn:outgoing>
+      <bpmn:outgoing>seta_22</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="cancela" name="Cancela antes da solução, com o motivo">
+      <bpmn:incoming>seta_22</bpmn:incoming>
+      <bpmn:outgoing>seta_23</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="f_canc" name="Cancelado (definitivo)">
+      <bpmn:incoming>seta_23</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="assume" name="Assume e classifica (tipo e categoria)">
+      <bpmn:incoming>seta_6</bpmn:incoming>
+      <bpmn:outgoing>seta_7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="atende" name="Inicia (ou planeja) e atende">
+      <bpmn:incoming>seta_7</bpmn:incoming>
+      <bpmn:incoming>seta_10</bpmn:incoming>
+      <bpmn:incoming>seta_13</bpmn:incoming>
+      <bpmn:incoming>seta_18</bpmn:incoming>
+      <bpmn:outgoing>seta_8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g_pend" name="Precisa do usuário ou de fornecedor?">
+      <bpmn:incoming>seta_8</bpmn:incoming>
+      <bpmn:outgoing>seta_9</bpmn:outgoing>
+      <bpmn:outgoing>seta_11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="g_sub" name="Depende de outra parte?">
+      <bpmn:incoming>seta_11</bpmn:incoming>
+      <bpmn:outgoing>seta_12</bpmn:outgoing>
+      <bpmn:outgoing>seta_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="pend" name="Pendente (o SLA pausa)">
+      <bpmn:incoming>seta_9</bpmn:incoming>
+      <bpmn:outgoing>seta_10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="sub" name="Abre subchamado (fluxo de subchamados)">
+      <bpmn:incoming>seta_12</bpmn:incoming>
+      <bpmn:outgoing>seta_13</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="solucao" name="Registra a solução">
+      <bpmn:incoming>seta_14</bpmn:incoming>
+      <bpmn:outgoing>seta_15</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="avisa" name="Avisa: sino, push, e-mail reserva">
+      <bpmn:incoming>seta_15</bpmn:incoming>
+      <bpmn:outgoing>seta_16</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="g_aprova" name="Resolveu?">
+      <bpmn:incoming>seta_16</bpmn:incoming>
+      <bpmn:outgoing>seta_17</bpmn:outgoing>
+      <bpmn:outgoing>seta_18</bpmn:outgoing>
+      <bpmn:outgoing>seta_19</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="avalia" name="Dá as estrelas">
+      <bpmn:incoming>seta_17</bpmn:incoming>
+      <bpmn:outgoing>seta_20</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="auto" name="Sem resposta em N dias úteis: fecha sozinho">
+      <bpmn:incoming>seta_19</bpmn:incoming>
+      <bpmn:outgoing>seta_21</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="fecha" name="Fechado (definitivo)">
+      <bpmn:incoming>seta_20</bpmn:incoming>
+      <bpmn:incoming>seta_21</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="seta_1" sourceRef="i" targetRef="abre" />
+    <bpmn:sequenceFlow id="seta_2" sourceRef="abre" targetRef="g_tri" />
+    <bpmn:sequenceFlow id="seta_3" name="Sim" sourceRef="g_tri" targetRef="triagem" />
+    <bpmn:sequenceFlow id="seta_4" name="Não" sourceRef="g_tri" targetRef="fila" />
+    <bpmn:sequenceFlow id="seta_5" sourceRef="triagem" targetRef="fila" />
+    <bpmn:sequenceFlow id="seta_6" sourceRef="fila" targetRef="assume" />
+    <bpmn:sequenceFlow id="seta_7" sourceRef="assume" targetRef="atende" />
+    <bpmn:sequenceFlow id="seta_8" sourceRef="atende" targetRef="g_pend" />
+    <bpmn:sequenceFlow id="seta_9" name="Sim" sourceRef="g_pend" targetRef="pend" />
+    <bpmn:sequenceFlow id="seta_10" name="Retoma" sourceRef="pend" targetRef="atende" />
+    <bpmn:sequenceFlow id="seta_11" name="Não" sourceRef="g_pend" targetRef="g_sub" />
+    <bpmn:sequenceFlow id="seta_12" name="Sim" sourceRef="g_sub" targetRef="sub" />
+    <bpmn:sequenceFlow id="seta_13" name="os filhos terminam" sourceRef="sub" targetRef="atende" />
+    <bpmn:sequenceFlow id="seta_14" name="Não" sourceRef="g_sub" targetRef="solucao" />
+    <bpmn:sequenceFlow id="seta_15" sourceRef="solucao" targetRef="avisa" />
+    <bpmn:sequenceFlow id="seta_16" sourceRef="avisa" targetRef="g_aprova" />
+    <bpmn:sequenceFlow id="seta_17" name="Sim" sourceRef="g_aprova" targetRef="avalia" />
+    <bpmn:sequenceFlow id="seta_18" name="Não: volta ao atendimento" sourceRef="g_aprova" targetRef="atende" />
+    <bpmn:sequenceFlow id="seta_19" name="sem resposta" sourceRef="g_aprova" targetRef="auto" />
+    <bpmn:sequenceFlow id="seta_20" sourceRef="avalia" targetRef="fecha" />
+    <bpmn:sequenceFlow id="seta_21" sourceRef="auto" targetRef="fecha" />
+    <bpmn:sequenceFlow id="seta_22" name="o usuário desiste" sourceRef="fila" targetRef="cancela" />
+    <bpmn:sequenceFlow id="seta_23" sourceRef="cancela" targetRef="f_canc" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="diagrama_chamado">
+    <bpmndi:BPMNPlane id="plano_chamado" bpmnElement="colab_chamado">
+      <bpmndi:BPMNShape id="pool_chamado_di" bpmnElement="pool_chamado" isHorizontal="true">
+        <dc:Bounds x="0" y="0" width="2678" height="875" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_un_di" bpmnElement="raia_un" isHorizontal="true">
+        <dc:Bounds x="34" y="0" width="2644" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_central_di" bpmnElement="raia_central" isHorizontal="true">
+        <dc:Bounds x="34" y="250" width="2644" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_tri_di" bpmnElement="raia_tri" isHorizontal="true">
+        <dc:Bounds x="34" y="500" width="2644" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_tec_di" bpmnElement="raia_tec" isHorizontal="true">
+        <dc:Bounds x="34" y="625" width="2644" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="i_di" bpmnElement="i">
+        <dc:Bounds x="152" y="44" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="110" y="84" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="abre_di" bpmnElement="abre">
+        <dc:Bounds x="284" y="22" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_tri_di" bpmnElement="g_tri" isMarkerVisible="true">
+        <dc:Bounds x="516" y="288" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="412" y="256" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="triagem_di" bpmnElement="triagem">
+        <dc:Bounds x="654" y="522" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="fila_di" bpmnElement="fila">
+        <dc:Bounds x="840" y="272" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="cancela_di" bpmnElement="cancela">
+        <dc:Bounds x="840" y="146" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="f_canc_di" bpmnElement="f_canc">
+        <dc:Bounds x="1078" y="170" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1036" y="210" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="assume_di" bpmnElement="assume">
+        <dc:Bounds x="1024" y="646" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="atende_di" bpmnElement="atende">
+        <dc:Bounds x="1210" y="646" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_pend_di" bpmnElement="g_pend" isMarkerVisible="true">
+        <dc:Bounds x="1440" y="662" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1338" y="630" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_sub_di" bpmnElement="g_sub" isMarkerVisible="true">
+        <dc:Bounds x="1626" y="662" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1522" y="630" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="pend_di" bpmnElement="pend">
+        <dc:Bounds x="1394" y="772" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sub_di" bpmnElement="sub">
+        <dc:Bounds x="1580" y="772" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="solucao_di" bpmnElement="solucao">
+        <dc:Bounds x="1764" y="646" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="avisa_di" bpmnElement="avisa">
+        <dc:Bounds x="1950" y="272" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_aprova_di" bpmnElement="g_aprova" isMarkerVisible="true">
+        <dc:Bounds x="2180" y="38" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2078" y="6" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="avalia_di" bpmnElement="avalia">
+        <dc:Bounds x="2320" y="22" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="auto_di" bpmnElement="auto">
+        <dc:Bounds x="2320" y="396" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="fecha_di" bpmnElement="fecha">
+        <dc:Bounds x="2558" y="294" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2516" y="334" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="seta_1_di" bpmnElement="seta_1">
+        <di:waypoint x="188" y="62" />
+        <di:waypoint x="284" y="62" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_2_di" bpmnElement="seta_2">
+        <di:waypoint x="426" y="62" />
+        <di:waypoint x="494" y="62" />
+        <di:waypoint x="494" y="312" />
+        <di:waypoint x="516" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_3_di" bpmnElement="seta_3">
+        <di:waypoint x="540" y="338" />
+        <di:waypoint x="540" y="562" />
+        <di:waypoint x="654" y="562" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="546" y="354" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_4_di" bpmnElement="seta_4">
+        <di:waypoint x="566" y="312" />
+        <di:waypoint x="840" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="572" y="278" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_5_di" bpmnElement="seta_5">
+        <di:waypoint x="796" y="562" />
+        <di:waypoint x="818" y="562" />
+        <di:waypoint x="818" y="312" />
+        <di:waypoint x="840" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_6_di" bpmnElement="seta_6">
+        <di:waypoint x="982" y="312" />
+        <di:waypoint x="1002" y="312" />
+        <di:waypoint x="1002" y="688" />
+        <di:waypoint x="1024" y="688" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_7_di" bpmnElement="seta_7">
+        <di:waypoint x="1166" y="688" />
+        <di:waypoint x="1210" y="688" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_8_di" bpmnElement="seta_8">
+        <di:waypoint x="1352" y="688" />
+        <di:waypoint x="1440" y="688" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_9_di" bpmnElement="seta_9">
+        <di:waypoint x="1466" y="712" />
+        <di:waypoint x="1466" y="772" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1472" y="730" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_10_di" bpmnElement="seta_10">
+        <di:waypoint x="1466" y="772" />
+        <di:waypoint x="1466" y="760" />
+        <di:waypoint x="1280" y="760" />
+        <di:waypoint x="1280" y="728" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1318" y="742" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_11_di" bpmnElement="seta_11">
+        <di:waypoint x="1490" y="688" />
+        <di:waypoint x="1626" y="688" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1496" y="654" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_12_di" bpmnElement="seta_12">
+        <di:waypoint x="1650" y="712" />
+        <di:waypoint x="1650" y="772" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1656" y="730" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_13_di" bpmnElement="seta_13">
+        <di:waypoint x="1650" y="772" />
+        <di:waypoint x="1650" y="760" />
+        <di:waypoint x="1280" y="760" />
+        <di:waypoint x="1280" y="728" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1410" y="742" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_14_di" bpmnElement="seta_14">
+        <di:waypoint x="1676" y="688" />
+        <di:waypoint x="1764" y="688" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1682" y="654" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_15_di" bpmnElement="seta_15">
+        <di:waypoint x="1906" y="688" />
+        <di:waypoint x="1928" y="688" />
+        <di:waypoint x="1928" y="312" />
+        <di:waypoint x="1950" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_16_di" bpmnElement="seta_16">
+        <di:waypoint x="2092" y="312" />
+        <di:waypoint x="2158" y="312" />
+        <di:waypoint x="2158" y="62" />
+        <di:waypoint x="2180" y="62" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_17_di" bpmnElement="seta_17">
+        <di:waypoint x="2230" y="62" />
+        <di:waypoint x="2320" y="62" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2236" y="28" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_18_di" bpmnElement="seta_18">
+        <di:waypoint x="2206" y="88" />
+        <di:waypoint x="2206" y="115" />
+        <di:waypoint x="1280" y="115" />
+        <di:waypoint x="1280" y="728" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1286" y="132" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_19_di" bpmnElement="seta_19">
+        <di:waypoint x="2206" y="88" />
+        <di:waypoint x="2206" y="438" />
+        <di:waypoint x="2320" y="438" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2212" y="404" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_20_di" bpmnElement="seta_20">
+        <di:waypoint x="2462" y="62" />
+        <di:waypoint x="2536" y="62" />
+        <di:waypoint x="2536" y="312" />
+        <di:waypoint x="2558" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_21_di" bpmnElement="seta_21">
+        <di:waypoint x="2462" y="438" />
+        <di:waypoint x="2536" y="438" />
+        <di:waypoint x="2536" y="312" />
+        <di:waypoint x="2558" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_22_di" bpmnElement="seta_22">
+        <di:waypoint x="910" y="272" />
+        <di:waypoint x="910" y="228" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="856" y="232" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_23_di" bpmnElement="seta_23">
+        <di:waypoint x="982" y="188" />
+        <di:waypoint x="1078" y="188" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

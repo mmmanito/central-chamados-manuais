@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="defs_sobreaviso" targetNamespace="https://central-chamados/fluxos" exporter="Central de Chamados" exporterVersion="4.9.0">
+  <bpmn:collaboration id="colab_sobreaviso">
+    <bpmn:participant id="pool_sobreaviso" name="Sobreaviso (5.0): fora do expediente, só o crítico aciona o plantonista" processRef="proc_sobreaviso" />
+  </bpmn:collaboration>
+  <bpmn:process id="proc_sobreaviso" name="Sobreaviso (5.0): fora do expediente, só o crítico aciona o plantonista" isExecutable="false">
+    <bpmn:laneSet id="raias_sobreaviso">
+      <bpmn:lane id="raia_un" name="Usuário">
+        <bpmn:flowNodeRef>i</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_central" name="Central">
+        <bpmn:flowNodeRef>g_crit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>espera</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>f_exp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>aciona</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="raia_plant" name="Plantonista da escala">
+        <bpmn:flowNodeRef>g_conf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>atende</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>rebaixa</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>f</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="i" name="Chamado fora do expediente">
+      <bpmn:outgoing>seta_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="g_crit" name="É crítico?">
+      <bpmn:incoming>seta_1</bpmn:incoming>
+      <bpmn:outgoing>seta_2</bpmn:outgoing>
+      <bpmn:outgoing>seta_3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="espera" name="Espera o expediente (o SLA não conta)">
+      <bpmn:incoming>seta_3</bpmn:incoming>
+      <bpmn:incoming>seta_8</bpmn:incoming>
+      <bpmn:outgoing>seta_4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="f_exp" name="Atendido no expediente">
+      <bpmn:incoming>seta_4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="aciona" name="Aciona o plantonista (push, repetido até confirmar)">
+      <bpmn:incoming>seta_2</bpmn:incoming>
+      <bpmn:outgoing>seta_5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="g_conf" name="Confirma?">
+      <bpmn:incoming>seta_5</bpmn:incoming>
+      <bpmn:outgoing>seta_6</bpmn:outgoing>
+      <bpmn:outgoing>seta_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="atende" name="Atende (o SLA do crítico conta)">
+      <bpmn:incoming>seta_6</bpmn:incoming>
+      <bpmn:outgoing>seta_9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="rebaixa" name="Rebaixa: não era crítico">
+      <bpmn:incoming>seta_7</bpmn:incoming>
+      <bpmn:outgoing>seta_8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="f" name="Solucionado">
+      <bpmn:incoming>seta_9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="seta_1" sourceRef="i" targetRef="g_crit" />
+    <bpmn:sequenceFlow id="seta_2" name="Sim" sourceRef="g_crit" targetRef="aciona" />
+    <bpmn:sequenceFlow id="seta_3" name="Não" sourceRef="g_crit" targetRef="espera" />
+    <bpmn:sequenceFlow id="seta_4" sourceRef="espera" targetRef="f_exp" />
+    <bpmn:sequenceFlow id="seta_5" sourceRef="aciona" targetRef="g_conf" />
+    <bpmn:sequenceFlow id="seta_6" name="Sim" sourceRef="g_conf" targetRef="atende" />
+    <bpmn:sequenceFlow id="seta_7" name="Rebaixa" sourceRef="g_conf" targetRef="rebaixa" />
+    <bpmn:sequenceFlow id="seta_8" sourceRef="rebaixa" targetRef="espera" />
+    <bpmn:sequenceFlow id="seta_9" sourceRef="atende" targetRef="f" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="diagrama_sobreaviso">
+    <bpmndi:BPMNPlane id="plano_sobreaviso" bpmnElement="colab_sobreaviso">
+      <bpmndi:BPMNShape id="pool_sobreaviso_di" bpmnElement="pool_sobreaviso" isHorizontal="true">
+        <dc:Bounds x="0" y="0" width="1198" height="625" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_un_di" bpmnElement="raia_un" isHorizontal="true">
+        <dc:Bounds x="34" y="0" width="1164" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_central_di" bpmnElement="raia_central" isHorizontal="true">
+        <dc:Bounds x="34" y="125" width="1164" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="raia_plant_di" bpmnElement="raia_plant" isHorizontal="true">
+        <dc:Bounds x="34" y="375" width="1164" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="i_di" bpmnElement="i">
+        <dc:Bounds x="152" y="44" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="110" y="84" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_crit_di" bpmnElement="g_crit" isMarkerVisible="true">
+        <dc:Bounds x="330" y="162" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="228" y="130" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="espera_di" bpmnElement="espera">
+        <dc:Bounds x="470" y="272" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="f_exp_di" bpmnElement="f_exp">
+        <dc:Bounds x="708" y="294" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="666" y="334" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="aciona_di" bpmnElement="aciona">
+        <dc:Bounds x="470" y="146" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g_conf_di" bpmnElement="g_conf" isMarkerVisible="true">
+        <dc:Bounds x="700" y="412" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="598" y="380" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="atende_di" bpmnElement="atende">
+        <dc:Bounds x="840" y="396" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="rebaixa_di" bpmnElement="rebaixa">
+        <dc:Bounds x="840" y="522" width="142" height="82" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="f_di" bpmnElement="f">
+        <dc:Bounds x="1078" y="420" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1036" y="460" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="seta_1_di" bpmnElement="seta_1">
+        <di:waypoint x="188" y="62" />
+        <di:waypoint x="308" y="62" />
+        <di:waypoint x="308" y="188" />
+        <di:waypoint x="330" y="188" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_2_di" bpmnElement="seta_2">
+        <di:waypoint x="380" y="188" />
+        <di:waypoint x="470" y="188" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="386" y="154" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_3_di" bpmnElement="seta_3">
+        <di:waypoint x="356" y="212" />
+        <di:waypoint x="356" y="312" />
+        <di:waypoint x="470" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="362" y="230" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_4_di" bpmnElement="seta_4">
+        <di:waypoint x="612" y="312" />
+        <di:waypoint x="708" y="312" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_5_di" bpmnElement="seta_5">
+        <di:waypoint x="612" y="188" />
+        <di:waypoint x="678" y="188" />
+        <di:waypoint x="678" y="438" />
+        <di:waypoint x="700" y="438" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_6_di" bpmnElement="seta_6">
+        <di:waypoint x="750" y="438" />
+        <di:waypoint x="840" y="438" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="756" y="404" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_7_di" bpmnElement="seta_7">
+        <di:waypoint x="726" y="462" />
+        <di:waypoint x="726" y="562" />
+        <di:waypoint x="840" y="562" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="732" y="480" width="80" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_8_di" bpmnElement="seta_8">
+        <di:waypoint x="910" y="522" />
+        <di:waypoint x="910" y="510" />
+        <di:waypoint x="540" y="510" />
+        <di:waypoint x="540" y="354" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="seta_9_di" bpmnElement="seta_9">
+        <di:waypoint x="982" y="438" />
+        <di:waypoint x="1078" y="438" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
